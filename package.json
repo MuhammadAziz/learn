@@ -1,0 +1,15 @@
+{
+  "name": "serverless",
+  "version": "1.0.0",
+  "description": "This directory is a brief example of a vanilla site that can be deployed with ZEIT Now and zero configuration.",
+  "main": "index.js",
+  "dependencies": {
+    "mongodb": "^3.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
