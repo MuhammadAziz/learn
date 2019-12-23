@@ -1,4 +1,3 @@
-// db.js
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
 
@@ -13,43 +12,16 @@ pool.on('connect', () => {
 });
 
 /**
- * Create Reflection Table
+ * Create Tables
  */
-const createReflectionTable = () => {
+const createTables = () => {
   const queryText =
     `CREATE TABLE IF NOT EXISTS
       reflections(
         id UUID PRIMARY KEY,
-        success TEXT NOT NULL,
-        low_point TEXT NOT NULL,
-        take_away TEXT NOT NULL,
-        owner_id UUID NOT NULL,
-        created_date TIMESTAMP,
-        modified_date TIMESTAMP,
-        FOREIGN KEY (owner_id) REFERENCES users (id) ON DELETE CASCADE
-      )`;
-
-  pool.query(queryText)
-    .then((res) => {
-      console.log(res);
-      pool.end();
-    })
-    .catch((err) => {
-      console.log(err);
-      pool.end();
-    });
-}
-
-/**
- * Create User Table
- */
-const createUserTable = () => {
-  const queryText =
-    `CREATE TABLE IF NOT EXISTS
-      users(
-        id UUID PRIMARY KEY,
-        email VARCHAR(128) UNIQUE NOT NULL,
-        password VARCHAR(128) NOT NULL,
+        success VARCHAR(128) NOT NULL,
+        low_point VARCHAR(128) NOT NULL,
+        take_away VARCHAR(128) NOT NULL,
         created_date TIMESTAMP,
         modified_date TIMESTAMP
       )`;
@@ -66,10 +38,10 @@ const createUserTable = () => {
 }
 
 /**
- * Drop Reflection Table
+ * Drop Tables
  */
-const dropReflectionTable = () => {
-  const queryText = 'DROP TABLE IF EXISTS reflections returning *';
+const dropTables = () => {
+  const queryText = 'DROP TABLE IF EXISTS reflections';
   pool.query(queryText)
     .then((res) => {
       console.log(res);
@@ -79,35 +51,6 @@ const dropReflectionTable = () => {
       console.log(err);
       pool.end();
     });
-}
-/**
- * Drop User Table
- */
-const dropUserTable = () => {
-  const queryText = 'DROP TABLE IF EXISTS users returning *';
-  pool.query(queryText)
-    .then((res) => {
-      console.log(res);
-      pool.end();
-    })
-    .catch((err) => {
-      console.log(err);
-      pool.end();
-    });
-}
-/**
- * Create All Tables
- */
-const createAllTables = () => {
-  createUserTable();
-  createReflectionTable();
-}
-/**
- * Drop All Tables
- */
-const dropAllTables = () => {
-  dropUserTable();
-  dropReflectionTable();
 }
 
 pool.on('remove', () => {
@@ -115,14 +58,9 @@ pool.on('remove', () => {
   process.exit(0);
 });
 
-
 module.exports = {
-  createReflectionTable,
-  createUserTable,
-  createAllTables,
-  dropUserTable,
-  dropReflectionTable,
-  dropAllTables
+  createTables,
+  dropTables
 };
 
 require('make-runnable');

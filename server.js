@@ -1,6 +1,10 @@
 // server.js
 const express = require('express');
+const dotenv = require('dotenv');
+require('babel-polyfill');
 const Reflection = require('./src/controllers/reflection');
+
+dotenv.config();
 
 const app = express()
 
